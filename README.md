@@ -57,4 +57,4 @@ During disasters, people often face difficulties in **accessing accurate and tim
 ---
 
 > *This project is developed as a final project in fulfillment of the subject Intelligent Systems (INTSYS1) to promote community disaster resilience through AI-driven preparedness assistance.* 
-> *This project also supports global efforts toward SDG 11 --- Sustainable Cities and Communities, and SDG 13 --- Climate Action*.
+> *This project also supports global efforts toward SDG 11 — Sustainable Cities and Communities, and SDG 13 — Climate Action*.
