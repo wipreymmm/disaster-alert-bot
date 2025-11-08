@@ -16,12 +16,6 @@ build/
 # VS Code
 .vscode/
 
-# SCSS compiled files
-*.css
-*.css.map
-static/*.css
-static/*.css.map
-
 # OS files
 .DS_Store
 Thumbs.db
