@@ -1,0 +1,55 @@
+{% extends "./base/base.html" %}
+
+
+
+{% block content %}
+<main style="display: flex; gap: 20px; padding: 20px;">
+    <!-- Left Sidebar -->
+    <div class="left-sidebar" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+        <p>Lorem ipsum</p>
+    </div>
+
+    <!-- Chatbot Container (Center) -->
+    <div class="chatbot-container" style="flex: 2; border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+        <!-- Chat Window -->
+        <div id="chat-window" style="height: 400px; overflow-y: auto; border: 1px solid #eee; padding: 10px; margin-bottom: 10px;">
+            <p>
+                <strong>Bot:</strong> Hello! I’m your Disaster Preparedness Assistant. How can I help you today?
+            </p>
+        </div>
+
+        <!-- Chat Field -->
+        <div style="display: flex; gap: 10px;">
+            <input type="text" id="user-input" placeholder="Type your message..." style="flex: 1; padding: 8px;">
+            <button id="send-btn" style="padding: 8px 16px;">Send</button>
+        </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="right-sidebar" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+        <!-- Current Info Card -->
+        <div class="card current-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+            <h3>Current Conditions</h3>
+            <p><strong>Time:</strong> <span id="current-time"></span></p>
+            <p><strong>Location:</strong> <span id="current-location">Test, Philippines</span></p>
+            <p><strong>Weather:</strong> <span id="current-weather">Rainy, 27°C</span></p>
+        </div>
+
+        <!-- Forecast Card -->
+        <div class="card forecast" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+            <h3>Weather Forecast</h3>
+            <ul id="forecast-list" style="list-style: none; padding-left: 0;">
+                <li><strong><u>Sunday:</u></strong> Thunderstorms, 27°C</li>
+                <li><strong>Monday:</strong> Thunderstorms, 25°C</li>
+                <li><strong>Tuesday:</strong> Thunderstorms, 26°C</li>
+                <li><strong>Wednesday:</strong> Light Rain, 25°C</li>
+                <li><strong>Thursday:</strong> Cloudy, 23°C</li>
+                <li><strong>Friday:</strong> Cloudy, 22°C</li>
+                <li><strong>Saturday:</strong> Sunny, 26°C</li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<script src="./static/js/currentTime.js"></script>
+{% endblock content %}
