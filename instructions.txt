@@ -1,0 +1,11 @@
+NOTE:
+
+After cloning this repository, make a Python virtual environment first. It is recommended to use the recent version (3.14).
+
+Check the Python version by running 'py --version' or 'python --version'.
+
+You can create a vitrual environment by running 'python -m venv venv' to create the virtual environment inside the /venv/ folder.
+
+Then, run 'pip install -r requirements.txt' to download all project dependencies.
+
+To access the web app in localhost, run 'flask run'.

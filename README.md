@@ -1,6 +1,6 @@
 # DisasterAlertBot: Local Disaster Preparedness Chatbot
 
-> ***Note for Developers**: Please read the instructions first located in `requirements.txt`*
+> ***Note for Developers**: Please read the instructions first located in* `instructions.txt`
 
 ## Project Description
 
