@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+.env
+*.venv
+venv/
+env/
+*.egg-info/
+dist/
+build/
+*.log
+
+# VS Code
+.vscode/
+
+# SCSS compiled files
+*.css
+*.css.map
+static/*.css
+static/*.css.map
+
+# OS files
+.DS_Store
+Thumbs.db
