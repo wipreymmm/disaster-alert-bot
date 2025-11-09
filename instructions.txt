@@ -1,8 +1,9 @@
 NOTE:
 
-After cloning this repository, make a Python virtual environment first. It is recommended to use the recent version (3.14).
+After cloning this repository, make a Python virtual environment first. It is recommended to use version 3.12
+since some project dependencies in langchain-chroma have not been supported yet in the latest version (3.14).
 
-Check the Python version by running 'py --version' or 'python --version'.
+Check the Python version by running 'py --version' or 'python --version', it should be "Python version 3.12.0".
 
 You can create a vitrual environment by running 'python -m venv venv' to create the virtual environment inside the /venv/ folder.
 
