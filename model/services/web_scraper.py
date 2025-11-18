@@ -6,7 +6,6 @@ from langchain_core.documents import Document
 
 async def fetch_html(session: aiohttp.ClientSession, url: str) -> str:
     try:
-        # Use aiohttp.ClientTimeout instead of raw int
         timeout = aiohttp.ClientTimeout(total=10)
         async with session.get(url, timeout=timeout) as response:
             response.raise_for_status()
@@ -24,7 +23,6 @@ def parse_html_to_text(html: str) -> str:
     return soup.get_text(separator="\n").strip()
 
 async def scrape_single_url(url: str) -> Optional[Document]:
-    # Return type should be Optional[Document] since it can return None
     async with aiohttp.ClientSession() as session:
         html = await fetch_html(session, url)
         text = parse_html_to_text(html)

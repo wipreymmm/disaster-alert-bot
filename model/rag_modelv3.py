@@ -20,7 +20,7 @@ os.makedirs(DB_DIR, exist_ok=True)
 MAX_HISTORY_LENGTH = 5
 chat_history = deque(maxlen=MAX_HISTORY_LENGTH)
 
-TOP_K_CHUNKS = 3  # Increased to 3 since we have more diverse sources now
+TOP_K_CHUNKS = 3
 
 # -------------------- LOAD AND PREPARE DATA --------------------
 def load_and_prepare_documents() -> List[Document]:
@@ -30,7 +30,7 @@ def load_and_prepare_documents() -> List[Document]:
     """
     all_chunks = []
     
-    # 1. Load PDF and split into chunks (fallback source)
+    # Load PDF and split into chunks (fallback source)
     print("[DEBUG] Loading PDF...")
     start_time = time.time()
     try:
@@ -50,11 +50,11 @@ def load_and_prepare_documents() -> List[Document]:
         print(f"[ERROR] Failed to load PDF: {e}")
         pdf_chunks = []
     
-    # 2. Fetch disaster data (web first, then PDF fallback)
+    # Fetch disaster web data
     print("[DEBUG] Fetching disaster data from multiple sources...")
     fetched_docs = fetch_disaster_data(pdf_chunks=pdf_chunks)
     
-    # 3. Split web-scraped documents into chunks (they might be large)
+    # Split web-scraped documents into chunks
     print("[DEBUG] Splitting fetched documents into chunks...")
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
@@ -65,11 +65,9 @@ def load_and_prepare_documents() -> List[Document]:
     for doc in fetched_docs:
         # Check if document is from web (not PDF) and needs splitting
         if doc.metadata.get("source", "").startswith("http"):
-            # Web documents might be large, split them
             chunks = text_splitter.split_documents([doc])
             all_chunks.extend(chunks)
         else:
-            # PDF chunks are already split, add as-is
             all_chunks.append(doc)
     
     print(f"[DEBUG] Total chunks prepared: {len(all_chunks)}")
@@ -84,8 +82,7 @@ embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 print("[DEBUG] Initializing vector store...")
 
 start_time = time.time()
-# Always recreate vector store to include fresh web data
-# If you want to cache, add logic to check if web sources changed
+# Recreate vector store to include fresh web data
 vector_store = Chroma.from_documents(
     chunks, 
     embedding=embeddings, 
@@ -159,12 +156,8 @@ def ask_question(question: str) -> str:
     print(f"[DEBUG] Updated chat history; total exchanges: {len(chat_history)}")
     return answer
 
-# -------------------- OPTIONAL: REFRESH WEB DATA --------------------
+# -------------------- REFRESH WEB DATA --------------------
 def refresh_web_data():
-    """
-    Refresh vector store with latest web data.
-    Call this periodically or on-demand to update web sources.
-    """
     global vector_store, chunks
     print("[DEBUG] Refreshing web data...")
     chunks = load_and_prepare_documents()

@@ -2,7 +2,7 @@ from typing import List, Optional
 from langchain_core.documents import Document
 from .web_scraper import scrape_urls_sync
 
-# Example: web links to scrape
+# Web links to scrape
 WEB_SOURCES = [
     # NDRRMC
     "https://ndrrmc.gov.ph/",
