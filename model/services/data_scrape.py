@@ -5,7 +5,6 @@ from .web_scraper import scrape_urls_sync
 # Web links to scrape
 WEB_SOURCES = [
     # NDRRMC
-    "https://ndrrmc.gov.ph/",
     "https://monitoring-dashboard.ndrrmc.gov.ph/page/rainfall",
     "https://monitoring-dashboard.ndrrmc.gov.ph/page/rainfall_warning",
     "https://monitoring-dashboard.ndrrmc.gov.ph/page/weather_advisory",
