@@ -10,10 +10,11 @@
     <!-- Chatbot Container (Center) -->
     <div class="chatbot-container" style="flex: 2; border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
         <!-- Chat Window -->
+        <p>
+            <strong>Bot:</strong> Hello! I’m your Disaster Preparedness Assistant. How can I help you today?
+        </p>
         <div id="chat-window" style="height: 400px; overflow-y: auto; border: 1px solid #eee; padding: 10px; margin-bottom: 10px;">
-            <p>
-                <strong>Bot:</strong> Hello! I’m your Disaster Preparedness Assistant. How can I help you today?
-            </p>
+            <!-- Chat messages will appear here -->
         </div>
 
         <!-- Chat Field -->
@@ -50,4 +51,5 @@
 </main>
 
 <script src="./static/js/currentTime.js"></script>
+<script src="./static/js/sendToRAGModel.js"></script>
 {% endblock content %}

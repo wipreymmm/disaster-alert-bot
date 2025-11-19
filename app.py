@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, request, jsonify, render_template
 from datetime import datetime
+from model.rag_modelv4 import ask_question, refresh_web_data
 
 # App
 app = Flask(__name__)
@@ -9,19 +10,30 @@ app = Flask(__name__)
 def index():
     return render_template('index.html', title='DisasterAlertBot')
 
-@app.route('/home') # Landing Page
-def home():
-    return render_template('home.html', title='DisasterAlertBot | Home')
+@app.route("/ask", methods=["POST"])
+def ask():
+    data = request.get_json()
+    message = data.get("message", "").strip()
+    
+    if not message:
+        return jsonify({"answer": "(Error: Empty message)"})
+    
+    try:
+        answer = ask_question(message)  # call RAG function
+        return jsonify({"answer": answer})
+    except Exception as e:
+        return jsonify({"answer": f"(Error: {e})"})
 
-"""
-@app.route('/signin') # Sign up Page
-def signup():
-    return render_template('signup.html', title='DisasterAlertBot | Sign Up')
+@app.route("/refresh", methods=["POST"])
+def refresh():
+    try:
+        refresh_web_data()
+        return jsonify({"status": "success", "message": "Web sources refreshed!"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": f"Refresh failed: {e}"})
 
-@app.route('/login') # Log in Page
-def login():
-    return render_template('login.html', title='DisasterAlertBot | Log In')
-"""
+if __name__ == "__main__":
+    app.run(debug=True)
 
 # Context Processors
 @app.context_processor
