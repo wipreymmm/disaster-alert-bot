@@ -45,7 +45,7 @@ WEB_SOURCES = [
     "https://www.ready.gov/tl/home-fires",
     "https://houseofit.ph/how-to-protect-against-cyber-threats-in-the-philippines/",
     
-    # TODO: Add more sources 
+    # TODO: Add more sources for web scraping
 ]
 
 def fetch_disaster_data(pdf_chunks: Optional[List[Document]] = None) -> List[Document]:
