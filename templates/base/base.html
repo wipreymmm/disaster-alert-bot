@@ -6,15 +6,6 @@
     <title>{{ title }}</title>
 </head>
 <body>
-    <!-- NOTE: Change to sidebar -->
-    <header>
-        <nav>
-            <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('login') }}">Login</a>
-        </nav>
-    </header>
-    <hr>
-
     {% block content %}
         <!-- Each contents of a page injects its content here -->
     {% endblock content %}
