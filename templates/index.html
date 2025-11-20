@@ -1,53 +1,214 @@
 {% extends "./base/base.html" %}
 
 {% block content %}
-<main style="display: flex; gap: 20px; padding: 20px;">
-    <!-- Left Sidebar -->
-    <div class="left-sidebar" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
-        <p>Lorem ipsum</p>
-    </div>
-
-    <!-- Chatbot Container (Center) -->
-    <div class="chatbot-container" style="flex: 2; border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
-        <!-- Chat Window -->
-        <div id="chat-window" style="height: 400px; overflow-y: auto; border: 1px solid #eee; padding: 10px; margin-bottom: 10px;">
-            <p>
-                <strong>Bot:</strong> Hello! I’m your Disaster Preparedness Assistant. How can I help you today?
-            </p>
-        </div>
-
-        <!-- Chat Field -->
-        <div style="display: flex; gap: 10px;">
-            <input type="text" id="user-input" placeholder="Type your message..." style="flex: 1; padding: 8px;">
-            <button id="send-btn" style="padding: 8px 16px;">Send</button>
+<div class="mobile-header">
+    <div class="mobile-brand">
+        <h1>DisasterAlertBot</h1>
+        <div class="mobile-location" id="mobile-location-trigger">
+            <span id="mobile-location-text">Metro Manila</span>
+            <i class="bi bi-chevron-down" style="font-size: 0.7rem;"></i>
         </div>
     </div>
-
-    <!-- Right Sidebar -->
-    <div class="right-sidebar" style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
-        <!-- Current Info Card -->
-        <div class="card current-info" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
-            <h3>Current Conditions</h3>
-            <p><strong>Time:</strong> <span id="current-time"></span></p>
-            <p><strong>Location:</strong> <span id="current-location">Test, Philippines</span></p>
-            <p><strong>Weather:</strong> <span id="current-weather">Rainy, 27°C</span></p>
-        </div>
-
-        <!-- Forecast Card -->
-        <div class="card forecast" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
-            <h3>Weather Forecast</h3>
-            <ul id="forecast-list" style="list-style: none; padding-left: 0;">
-                <li><strong><u>Sunday:</u></strong> Thunderstorms, 27°C</li>
-                <li><strong>Monday:</strong> Thunderstorms, 25°C</li>
-                <li><strong>Tuesday:</strong> Thunderstorms, 26°C</li>
-                <li><strong>Wednesday:</strong> Light Rain, 25°C</li>
-                <li><strong>Thursday:</strong> Cloudy, 23°C</li>
-                <li><strong>Friday:</strong> Cloudy, 22°C</li>
-                <li><strong>Saturday:</strong> Sunny, 26°C</li>
-            </ul>
-        </div>
+    <div class="mobile-profile-icon" id="mobile-profile-trigger">
+        <i class="bi bi-person"></i>
     </div>
-</main>
+</div>
 
-<script src="./static/js/currentTime.js"></script>
+<div id="mobile-location-dropdown" class="location-dropdown-menu" style="top: 60px; left: 15px; width: calc(100% - 30px);">
+    <div class="location-option detect-btn" onclick="detectLocation()">
+        <i class="bi bi-crosshair me-2"></i> Use Current Location
+    </div>
+    <div class="location-option" onclick="updateLocation('Metro Manila')">Metro Manila</div>
+    <div class="location-option" onclick="updateLocation('Cebu City')">Cebu City</div>
+    <div class="location-option" onclick="updateLocation('Davao City')">Davao City</div>
+</div>
+
+<div id="mobile-profile-dropdown" class="profile-dropdown-menu">
+    <div class="profile-header-info">
+        <div class="d-flex align-items-center mb-2">
+            <div class="avatar-circle me-2" style="width: 32px; height: 32px; font-size: 0.8rem;">U</div>
+            <strong>User</strong>
+        </div>
+        <small>user_test@gmail.com</small>
+    </div>
+    <div class="profile-option sign-out-option" onclick="alert('Signing out...')">
+        <i class="bi bi-box-arrow-right me-2"></i> Sign Out
+    </div>
+</div>
+
+<div class="container-fluid h-100 p-0">
+    <div class="row g-0 h-100" id="main-row">
+        
+        <div class="col-lg-3 d-none d-lg-flex sidebar-left" id="sidebar-left">
+            <div class="mb-4">
+                <h1 class="brand-title">DisasterAlertBot</h1>
+                <p class="brand-subtitle">Philippine Disaster Preparedness</p>
+            </div>
+
+            <div class="mb-4 position-relative">
+                <label class="section-label">LOCATION</label>
+                <div class="d-flex align-items-center custom-select" id="desktop-location-trigger">
+                    <div class="d-flex align-items-center flex-grow-1">
+                        <i class="bi bi-geo-alt text-primary me-2"></i>
+                        <span class="fw-medium" id="desktop-location-text">Metro Manila</span>
+                    </div>
+                    <i class="bi bi-chevron-down text-secondary"></i>
+                </div>
+                
+                <div id="desktop-location-dropdown" class="location-dropdown-menu">
+                    <div class="location-option detect-btn" onclick="detectLocation()">
+                        <i class="bi bi-crosshair me-2"></i> Use Current Location
+                    </div>
+                    <div class="location-option" onclick="updateLocation('Metro Manila')">Metro Manila</div>
+                    <div class="location-option" onclick="updateLocation('Cebu City')">Cebu City</div>
+                    <div class="location-option" onclick="updateLocation('Davao City')">Davao City</div>
+                    <div class="location-option" onclick="updateLocation('Baguio City')">Baguio City</div>
+                </div>
+            </div>
+
+            <div class="mb-4 overflow-auto flex-grow-1">
+                <div class="hotline-card">
+                    <div class="hotline-icon-box">
+                        <i class="bi bi-telephone-fill"></i>
+                    </div>
+                    <div class="hotline-info">
+                        <h6>MMDA Hotline</h6>
+                        <small>136</small>
+                    </div>
+                </div>
+
+                <div class="hotline-card">
+                    <div class="hotline-icon-box">
+                        <i class="bi bi-life-preserver"></i>
+                    </div>
+                    <div class="hotline-info">
+                        <h6>Phil. Coast Guard</h6>
+                        <small>(02) 8527-8481</small>
+                    </div>
+                </div>
+
+                <div class="hotline-card">
+                    <div class="hotline-icon-box">
+                        <i class="bi bi-cloud-lightning-rain-fill"></i>
+                    </div>
+                    <div class="hotline-info">
+                        <h6>PAGASA Weather</h6>
+                        <small>(02) 8929-4638</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-profile">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="avatar-circle me-3">U</div>
+                    <div style="overflow: hidden;">
+                        <h6 class="mb-0 text-truncate">User</h6>
+                        <small class="text-muted text-truncate d-block" style="font-size: 0.75rem;">user_test@gmail.com</small>
+                    </div>
+                </div>
+                <button class="sign-out-btn">
+                    <i class="bi bi-box-arrow-right me-2"></i> Sign Out
+                </button>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6 chat-main" id="chat-main">
+            
+            <button class="toggle-sidebar-btn toggle-right d-none d-lg-flex" onclick="toggleRightSidebar()" title="Toggle Right Sidebar">
+                <i class="bi bi-layout-sidebar-reverse"></i>
+            </button>
+
+            <div id="chat-window" class="chat-window">
+                
+                <div class="message bot">
+                    <div class="bubble bot">
+                        Kamusta, kababayan! I'm DisasterAlertBot, your AI assistant for disaster preparedness in the Philippines.
+                        <br><br>
+                        How can I help you stay safe today?
+                    </div>
+                    <span class="msg-time">{{ now.strftime('%I:%M %p') }}</span>
+                </div>
+
+                <div id="loading-dots" class="typing-indicator" style="display: none;">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+
+            </div>
+
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <input type="text" id="user-input" placeholder="Ask about disaster preparedness..." autocomplete="off">
+                    <button id="send-btn" class="send-btn-icon">
+                        <i class="bi bi-send-fill"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 d-none d-lg-block sidebar-right" id="sidebar-right">
+            <div class="mb-4">
+                <h5 class="fw-bold mb-1">Weather Forecast</h5>
+                <span class="text-muted small" id="weather-location-text">Metro Manila</span>
+            </div>
+
+            <div class="weather-card-main">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <div class="temp-big">28°</div>
+                        <div class="fw-medium mt-1">Partly Cloudy</div>
+                    </div>
+                    <i class="bi bi-brightness-high-fill" style="font-size: 3.5rem; color: var(--tertiary-color);"></i>
+                </div>
+                <div class="weather-details">
+                    <span><i class="bi bi-wind me-1"></i> 12 km/h</span>
+                    <span><i class="bi bi-droplet-fill me-1"></i> 75%</span>
+                </div>
+            </div>
+
+            <h6 class="fw-bold mb-3">5-Day Forecast</h6>
+            <div class="forecast-list">
+                <div class="forecast-item">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-cloud text-secondary me-3 fs-5"></i>
+                        <span class="fw-medium">Monday</span>
+                    </div>
+                    <div><span class="fw-bold">31°</span> <span class="text-muted small">24°</span></div>
+                </div>
+                <div class="forecast-item">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-cloud-rain text-info me-3 fs-5"></i>
+                        <span class="fw-medium">Tuesday</span>
+                    </div>
+                    <div><span class="fw-bold">30°</span> <span class="text-muted small">25°</span></div>
+                </div>
+                <div class="forecast-item">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-cloud-drizzle text-primary me-3 fs-5"></i>
+                        <span class="fw-medium">Wednesday</span>
+                    </div>
+                    <div><span class="fw-bold">29°</span> <span class="text-muted small">24°</span></div>
+                </div>
+                <div class="forecast-item">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-sun text-warning me-3 fs-5"></i>
+                        <span class="fw-medium">Thursday</span>
+                    </div>
+                    <div><span class="fw-bold">32°</span> <span class="text-muted small">25°</span></div>
+                </div>
+                <div class="forecast-item">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-cloud-lightning text-secondary me-3 fs-5"></i>
+                        <span class="fw-medium">Friday</span>
+                    </div>
+                    <div><span class="fw-bold">28°</span> <span class="text-muted small">24°</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/botReply.js') }}"></script>
 {% endblock content %}
