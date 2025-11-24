@@ -192,33 +192,3 @@ window.addEventListener('click', (e) => {
 if(desktopTrigger) desktopTrigger.addEventListener('click', () => toggleMenu(desktopMenu));
 if(mobileTrigger) mobileTrigger.addEventListener('click', () => toggleMenu(mobileMenu));
 if(profileTrigger) profileTrigger.addEventListener('click', () => toggleMenu(profileMenu));
-
-function updateLocation(locationName) {
-    document.getElementById('desktop-location-text').innerText = locationName;
-    document.getElementById('mobile-location-text').innerText = locationName;
-    const weatherText = document.getElementById('weather-location-text');
-    if(weatherText) weatherText.innerText = locationName;
-    desktopMenu.style.display = 'none';
-    mobileMenu.style.display = 'none';
-}
-
-function detectLocation() {
-    const originalTextDesktop = document.getElementById('desktop-location-text').innerText;
-    document.getElementById('desktop-location-text').innerText = "Locating...";
-    document.getElementById('mobile-location-text').innerText = "Locating...";
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
-    } else {
-        alert("Geolocation is not supported by this browser.");
-        updateLocation(originalTextDesktop);
-    }
-}
-
-function showPosition(position) {
-    setTimeout(() => { updateLocation("Detected: Manila"); }, 1000);
-}
-
-function showError(error) {
-    updateLocation("Metro Manila"); 
-}
